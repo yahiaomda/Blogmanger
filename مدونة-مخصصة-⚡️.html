@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'">
+    <title>نظامي الشخصي</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #f5f5f5;
+            --text-color: #333;
+            --white: #fff;
+            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --border-radius: 5px;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+        
+        /* تصميم التبويبات */
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .tab-button:hover:not(.active) {
+            background: #e0e0e0;
+        }
+        
+        .tab {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab.active-tab {
+            display: block;
+        }
+        
+        /* تصميم المدونة */
+        .article {
+            background: var(--white);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .article:hover {
+            transform: translateY(-3px);
+        }
+        
+        .article h3 {
+            margin-top: 0;
+            color: var(--text-color);
+        }
+        
+        .article small {
+            color: #666;
+            display: block;
+            margin-top: 10px;
+        }
+        
+        /* تصميم متتبع العادات */
+        .habit {
+            background: var(--white);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .habit h3 {
+            margin: 0;
+        }
+        
+        .progress {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        progress {
+            flex-grow: 1;
+            height: 20px;
+            border-radius: 10px;
+        }
+        
+        progress::-webkit-progress-bar {
+            background-color: #eee;
+            border-radius: 10px;
+        }
+        
+        progress::-webkit-progress-value {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* تصميم النماذج */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 16px;
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        button {
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        button.secondary {
+            background: #f44336;
+        }
+        
+        /* تصميم التنبيهات */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            animation: slideIn 0.3s ease, fadeOut 0.5s ease 2.5s forwards;
+        }
+        
+        /* تأثيرات الحركة */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .tab-buttons {
+                flex-direction: column;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>نظامي الشخصي</h1>
+    </header>
+    
+    <nav class="tab-buttons">
+        <button class="tab-button active" onclick="openTab('blog')" aria-controls="blog" aria-selected="true">المدونة</button>
+        <button class="tab-button" onclick="openTab('habits')" aria-controls="habits" aria-selected="false">تتبع العادات</button>
+    </nav>
+
+    <!-- قسم المدونة -->
+    <section id="blog" class="tab active-tab" role="tabpanel" aria-labelledby="blog-tab">
+        <h2>مدونتي</h2>
+        <div id="articles-container" role="list"></div>
+        
+        <div class="form-group">
+            <label for="article-title">عنوان المقال</label>
+            <input type="text" id="article-title" placeholder="أدخل عنوان المقال" maxlength="100" aria-required="true">
+        </div>
+        
+        <div class="form-group">
+            <label for="article-content">محتوى المقال</label>
+            <textarea id="article-content" placeholder="اكتب محتوى المقال هنا" aria-required="true"></textarea>
+        </div>
+        
+        <button onclick="addArticle()" aria-label="نشر مقال جديد">نشر المقال</button>
+    </section>
+
+    <!-- قسم متتبع العادات -->
+    <section id="habits" class="tab" role="tabpanel" aria-labelledby="habits-tab" hidden>
+        <h2>تتبع العادات اليومية</h2>
+        <div id="habits-container" role="list"></div>
+        
+        <div class="form-group">
+            <label for="new-habit">إضافة عادة جديدة</label>
+            <input type="text" id="new-habit" placeholder="أدخل عادة جديدة" maxlength="50" aria-required="true">
+        </div>
+        
+        <button onclick="addHabit()" aria-label="إضافة عادة جديدة">إضافة</button>
+    </section>
+
+    <script>
+        // === الدوال المساعدة ===
+        function sanitize(input) {
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML;
+        }
+        
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            toast.setAttribute('role', 'alert');
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.5s ease forwards';
+                setTimeout(() => toast.remove(), 500);
+            }, 2500);
+        }
+        
+        function saveToStorage(key, data) {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+                return true;
+            } catch (e) {
+                console.error('فشل الحفظ:', e);
+                showToast('تجاوزت الحد المسموح من التخزين!', 'error');
+                return false;
+            }
+        }
+        
+        // === نظام التبويب ===
+        function openTab(tabName) {
+            // تحديث أزرار التبويب
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+                button.setAttribute('aria-selected', 'false');
+            });
+            
+            document.querySelector(`.tab-button[onclick="openTab('${tabName}')"]`).classList.add('active');
+            document.querySelector(`.tab-button[onclick="openTab('${tabName}')"]`).setAttribute('aria-selected', 'true');
+            
+            // إخفاء جميع الأقسام
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active-tab');
+                tab.setAttribute('hidden', 'true');
+            });
+            
+            // إظهار القسم المحدد
+            const activeTab = document.getElementById(tabName);
+            activeTab.classList.add('active-tab');
+            activeTab.removeAttribute('hidden');
+        }
+        
+        // === المدونة ===
+        let articles = JSON.parse(localStorage.getItem('articles')) || [];
+        
+        function renderArticles() {
+            const container = document.getElementById('articles-container');
+            container.innerHTML = '';
+            
+            if (articles.length === 0) {
+                container.innerHTML = '<p>لا توجد مقالات حتى الآن. ابدأ بإضافة مقال جديد!</p>';
+                return;
+            }
+            
+            articles.forEach((article, index) => {
+                const articleEl = document.createElement('article');
+                articleEl.className = 'article';
+                articleEl.setAttribute('role', 'listitem');
+                articleEl.innerHTML = `
+                    <h3>${sanitize(article.title)}</h3>
+                    <p>${sanitize(article.content).replace(/\n/g, '<br>')}</p>
+                    <small>تم النشر في: ${article.date}</small>
+                    <div class="controls">
+                        <button onclick="deleteArticle(${index})" class="secondary" aria-label="حذف المقال">حذف</button>
+                    </div>
+                `;
+                container.appendChild(articleEl);
+            });
+        }
+        
+        function addArticle() {
+            const titleInput = document.getElementById('article-title');
+            const contentInput = document.getElementById('article-content');
+            const title = titleInput.value.trim();
+            const content = contentInput.value.trim();
+            
+            if (!title || !content) {
+                showToast('الرجاء إدخال عنوان ومحتوى للمقال', 'error');
+                return;
+            }
+            
+            const newArticle = {
+                title: title,
+                content: content,
+                date: new Date().toLocaleString('ar-EG', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })
+            };
+            
+            articles.unshift(newArticle); // إضافة في البداية لعرض الأحدث أولاً
+            
+            if (saveToStorage('articles', articles)) {
+                titleInput.value = '';
+                contentInput.value = '';
+                renderArticles();
+                showToast('تم نشر المقال بنجاح', 'success');
+            }
+        }
+        
+        function deleteArticle(index) {
+            if (confirm('هل أنت متأكد من حذف هذا المقال؟')) {
+                articles.splice(index, 1);
+                if (saveToStorage('articles', articles)) {
+                    renderArticles();
+                    showToast('تم حذف المقال بنجاح', 'success');
+                }
+            }
+        }
+        
+        // === متتبع العادات ===
+        let habits = JSON.parse(localStorage.getItem('habits')) || [];
+        
+        function isDuplicateHabit(name) {
+            return habits.some(h => h.name.toLowerCase() === name.trim().toLowerCase());
+        }
+        
+        function renderHabits() {
+            const container = document.getElementById('habits-container');
+            container.innerHTML = '';
+            
+            if (habits.length === 0) {
+                container.innerHTML = '<p>لا توجد عادات حتى الآن. ابدأ بإضافة عادة جديدة!</p>';
+                return;
+            }
+            
+            habits.forEach((habit, index) => {
+                const habitEl = document.createElement('div');
+                habitEl.className = 'habit';
+                habitEl.setAttribute('role', 'listitem');
+                habitEl.innerHTML = `
+                    <h3>${sanitize(habit.name)}</h3>
+                    <div class="progress">
+                        <progress value="${habit.days}" max="30" aria-label="تقدم العادة"></progress>
+                        <span>${habit.days}/30 يوم</span>
+                    </div>
+                    <div class="controls">
+                        <button onclick="incrementDays(${index})" aria-label="زيادة الأيام">+ يوم</button>
+                        <button onclick="decrementDays(${index})" aria-label="تقليل الأيام">- يوم</button>
+                        <button onclick="deleteHabit(${index})" class="secondary" aria-label="حذف العادة">حذف</button>
+                    </div>
+                `;
+                container.appendChild(habitEl);
+            });
+        }
+        
+        function addHabit() {
+            const input = document.getElementById('new-habit');
+            const habitName = input.value.trim();
+            
+            if (!habitName) {
+                showToast('الرجاء إدخال اسم العادة', 'error');
+                return;
+            }
+            
+            if (isDuplicateHabit(habitName)) {
+                showToast('هذه العادة موجودة بالفعل!', 'error');
+                return;
+            }
+            
+            const newHabit = {
+                name: habitName,
+                days: 0
+            };
+            
+            habits.push(newHabit);
+            
+            if (saveToStorage('habits', habits)) {
+                input.value = '';
+                renderHabits();
+                showToast('تمت إضافة العادة بنجاح', 'success');
+            }
+        }
+        
+        function incrementDays(index) {
+            habits[index].days++;
+            if (saveToStorage('habits', habits)) {
+                renderHabits();
+                if (habits[index].days === 30) {
+                    showToast(`مبروك! لقد أتممت 30 يومًا في ${habits[index].name}`, 'success');
+                }
+            }
+        }
+        
+        function decrementDays(index) {
+            if (habits[index].days > 0) {
+                habits[index].days--;
+                if (saveToStorage('habits', habits)) {
+                    renderHabits();
+                }
+            } else {
+                showToast('لا يمكن أن يكون عدد الأيام أقل من الصفر', 'error');
+            }
+        }
+        
+        function deleteHabit(index) {
+            if (confirm('هل أنت متأكد من حذف هذه العادة؟')) {
+                const habitName = habits[index].name;
+                habits.splice(index, 1);
+                if (saveToStorage('habits', habits)) {
+                    renderHabits();
+                    showToast(`تم حذف عادة "${habitName}"`, 'success');
+                }
+            }
+        }
+        
+        // تحميل البيانات عند فتح الصفحة
+        window.onload = function() {
+            renderArticles();
+            renderHabits();
+            
+            // إضافة خدمة Worker للنسخ الاحتياطي
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js').catch(err => {
+                    console.error('فشل تسجيل Service Worker:', err);
+                });
+            }
+        };
+    </script>
+</body>
+</html>
